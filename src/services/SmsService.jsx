@@ -2,24 +2,25 @@ import React,{useState, useEffect} from 'react';
 const SmsService={
 
     
-    prueba:function({numero,valor})
+    sendMessage:function({cellphone,message})
     {
-        const consultarAPI = async () => {
-              const url = `http://192.168.20.126/cgi/WebCGI?1500101=account=apiuser&password=apipass&port=1&destination=${numero}&content=${valor}`;
-              const respuesta = await fetch(url);
-              const resultado = await respuesta.json();
-              if(resultado.cod === "404") {
+
+        const fetchAPI = async () => {
+              const url = `http://192.168.20.126/cgi/WebCGI?1500101=account=apiuser&password=apipass&port=1&destination=${cellphone}&content=${message}`;
+              const res = await fetch(url);
+              const result = await res.json();
+              if(result.cod === "404") {
                   alert('error')
               } 
         }
-        consultarAPI();
+        fetchAPI();
     },
-    prueba2:function(valor){
-        const lista=JSON.parse(sessionStorage.getItem("nums"))
-        const tamano=(lista['data'].length-1)
-        for (var i = tamano; i >=0 ; i--) {
-            const telefono=(lista['data'][i][0])
-            this.prueba({numero:telefono,valor:valor})
+    sender:function(message){
+        const cellphoneList=JSON.parse(sessionStorage.getItem("nums"))
+        const size=(cellphoneList['data'].length-1)
+        for (var i = size; i >=0 ; i--) {
+            const cellphone=(cellphoneList['data'][i][0])
+            this.sendMessage({cellphone:cellphone,message:message})
     }
     }
 };

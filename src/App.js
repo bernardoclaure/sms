@@ -8,21 +8,21 @@ import CargarCsv from './components/CargarCsv.tsx';
 const myArray = ['Water', 'Orange Juice', 'Milk'];
 class App extends React.Component{
   state = {
-    value: ''
+    message: ''
   };
-  onChangeValueHandler = (val) => {
-      this.setState({ value: val.target.value })
+  onChangeMessageHandler = (val) => {
+      this.setState({ message: val.target.value })
     }
     render(){
-      const {value}=this.state;
+      const {message}=this.state;
   return (
     <div className="App">
       <header className="App-header">
       <CargarCsv></CargarCsv>
         <div>
-          <Formulario value={value} onChangeValue={this.onChangeValueHandler}></Formulario>
+          <Formulario message={message} onChangeMessage={this.onChangeMessageHandler}></Formulario>
         </div>
-        <Button onClick={() => SmsService.prueba2(value)} telefono='123'>Enviar</Button>
+        <Button onClick={() => SmsService.sender(message)} telefono='123'>Enviar</Button>
         {(sessionStorage.getItem("cargado"))
         ? <>
         <div>
