@@ -3,7 +3,6 @@ import React, { useState, CSSProperties } from 'react';
 import {
   useCSVReader,
   lightenDarkenColor,
-  formatFileSize,
 } from 'react-papaparse';
 
 const GREY = '#CCC';
@@ -30,7 +29,7 @@ const styles = {
     background: 'linear-gradient(to bottom, #EEE, #DDD)',
     borderRadius: 20,
     display: 'flex',
-    height: 120,
+    height: 60,
     width: 120,
     position: 'relative',
     zIndex: 10,
@@ -44,25 +43,11 @@ const styles = {
     paddingLeft: 10,
     paddingRight: 10,
   } as CSSProperties,
-  size: {
-    backgroundColor: GREY_LIGHT,
-    borderRadius: 3,
-    marginBottom: '0.5em',
-    justifyContent: 'center',
-    display: 'flex',
-  } as CSSProperties,
   name: {
     backgroundColor: GREY_LIGHT,
     borderRadius: 3,
     fontSize: 12,
     marginBottom: '0.5em',
-  } as CSSProperties,
-  progressBar: {
-    bottom: 14,
-    position: 'absolute',
-    width: '100%',
-    paddingLeft: 10,
-    paddingRight: 10,
   } as CSSProperties,
   zoneHover: {
     borderColor: GREY_DIM,
@@ -71,11 +56,11 @@ const styles = {
     borderColor: GREY,
   } as CSSProperties,
   remove: {
-    height: 23,
+    height: 20,
     position: 'absolute',
     right: 6,
     top: 6,
-    width: 23,
+    width: 20,
   } as CSSProperties,
 };
 
@@ -90,6 +75,7 @@ export default function CargarCsv() {
     <CSVReader
       onUploadAccepted={(results: any) => {
         sessionStorage.setItem("nums", JSON.stringify(results))
+        sessionStorage.setItem("cargado",JSON.stringify(true))
         setZoneHover(false);
         
       }}
@@ -105,7 +91,6 @@ export default function CargarCsv() {
       {({
         getRootProps,
         acceptedFile,
-        ProgressBar,
         getRemoveFileProps,
         Remove,
       }: any) => (
@@ -122,13 +107,7 @@ export default function CargarCsv() {
               <>
                 <div style={styles.file}>
                   <div style={styles.info}>
-                    <span style={styles.size}>
-                      {formatFileSize(acceptedFile.size)}
-                    </span>
                     <span style={styles.name}>{acceptedFile.name}</span>
-                  </div>
-                  <div style={styles.progressBar}>
-                    <ProgressBar />
                   </div>
                   <div
                     {...getRemoveFileProps()}
@@ -145,13 +124,18 @@ export default function CargarCsv() {
                     <Remove color={removeHoverColor} />
                   </div>
                 </div>
+                
               </>
+              
             ) : (
               'Arrasatra el  CSV file or haga click para subir un archivo'
+              
             )}
+            
           </div>
         </>
       )}
     </CSVReader>
+    
   );
 }
