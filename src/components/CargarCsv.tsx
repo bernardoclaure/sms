@@ -128,7 +128,7 @@ export default function CargarCsv() {
               </>
               
             ) : (
-              'Arrasatra el  CSV file or haga click para subir un archivo'
+              'Arrastra el  CSV file o haga click para subir un archivo' 
               
             )}
             
